@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes, { func, number, object, string } from 'prop-types'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
-const MyButton = ({ text, func = () => {}}) => {
+const MyButton = ({ text, func = () => {} }) => {
     return (
       <View style={styles.btn}>
         <TouchableOpacity style={styles.tchop} onPress={func}>
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
 
     txt: {
       color: 'white',
-      fontSize: 32,
-      fontFamily:'roboto',
+      fontSize: 30,
+      fontFamily:'Galvji',
       fontStyle: 'normal',
       fontWeight: 'bold',
     }

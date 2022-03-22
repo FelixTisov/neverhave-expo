@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     txt: {
       color: 'white',
       fontSize: 25,
-      fontFamily:'roboto',
+      fontFamily:'Galvji',
       fontStyle: 'normal',
     },
 
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: '5%',
         color: 'white',
         fontSize: 28,
-        fontFamily:'roboto',
+        fontFamily:'Galvji',
         fontStyle: 'normal',
         textAlign: 'center',
 

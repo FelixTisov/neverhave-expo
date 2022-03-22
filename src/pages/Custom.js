@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ImageBackground, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import { ImageBackground, StyleSheet, ScrollView, View, Text, TouchableOpacity, TextInput} from 'react-native';
 import MyButton from '../components/MyButton';
 import CustomItem from '../components/CustomItem';
 
@@ -8,8 +8,16 @@ const Custom = ({navigation}) => {
     let questions = ['Текст 1...','Текст 2...','Текст 3...','Текст 4...',]
     const [questList, setQuestList] = useState(questions)
 
+    //Добавление вопроса
     const addQuestion = () => {
-      setQuestList([...questList, 'новый'])
+      setQuestList([...questList, ''])
+    }
+
+    //Удаление вопроса
+    const deleteQuest = (index) => {
+      let temp = [...questList]
+      temp.splice(index, 1)
+      setQuestList(temp)
     }
 
     return (
@@ -35,13 +43,17 @@ const Custom = ({navigation}) => {
 
           {/* Лист с вопросами */}
           <View style={{flex:4, flexDirection: 'column', width: '100%', marginTop: '6%'}}>
+          <ScrollView vertical bounces={false}>
             <View style={{flex: 1, flexDirection: 'column', alignItems: 'center',}}>
               {
-                  questList.map((item) => {
-                    return <CustomItem text={item}></CustomItem>
+                  questList.map((item, index) => {
+                    return (
+                      <CustomItem text={item} func={() => {deleteQuest(index)}} ></CustomItem>
+                    )                 
                   })
               }
             </View>
+          </ScrollView>
           </View>
           
           <View style={{flex: 1, }}>
@@ -95,8 +107,8 @@ const styles = StyleSheet.create({
 
     txt: {
       color: 'white',
-      fontSize: 25,
-      fontFamily:'roboto',
+      fontSize: 22,
+      fontFamily:'Galvji',
       fontStyle: 'normal',
       fontWeight: 'bold',
     },
@@ -108,7 +120,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginBottom: '10%',
     },
-
+    
   })
 
 export default Custom

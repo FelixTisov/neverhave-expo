@@ -281,13 +281,13 @@ const styles = StyleSheet.create({
   description: {
     color: 'white',
     fontSize: 25,
-    fontFamily:'roboto',
+    fontFamily:'Galvji',
   },
 
   txt: {
     color: 'white',
     fontSize: 25,
-    fontFamily:'roboto',
+    fontFamily:'Galvji',
     fontStyle: 'normal',
     fontWeight: 'bold',
   }

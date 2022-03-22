@@ -36,7 +36,7 @@ const Settings = ({route, navigation}) => {
             </View>
             <View style={styles.params}>
               <View style={{ flex: 2, alignItems: 'flex-start', justifyContent: 'flex-start'}}>
-                <Text style={{color: 'white', fontSize: 24, fontFamily:'roboto', fontStyle: 'normal', marginBottom: '6%'}}>кастомные вопросы</Text>    
+                <Text style={{color: 'white', fontSize: 24, fontFamily:'Galvji', fontStyle: 'normal', marginBottom: '6%'}}>кастомные вопросы</Text>    
               </View>
               <View style={{flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '2%'}}>
                 <ToggleSwitch
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     txt: {
       color: 'white',
       fontSize: 25,
-      fontFamily:'roboto',
+      fontFamily:'Galvji',
       fontStyle: 'normal',
       fontWeight: 'bold',
     },

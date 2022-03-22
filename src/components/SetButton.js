@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     txt: {
       color: 'white',
       fontSize: 24,
-      fontFamily:'roboto',
+      fontFamily:'Galvji',
       fontStyle: 'normal',
     }
 })
