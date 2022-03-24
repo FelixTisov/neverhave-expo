@@ -1,22 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { ImageBackground, StyleSheet, ScrollView, View, Text, TouchableOpacity, TextInput} from 'react-native';
 import MyButton from '../components/MyButton';
 import CustomItem from '../components/CustomItem';
+import QuestListContext from '../context';
 
-const Custom = ({navigation}) => {
+const Custom = ({route, navigation}) => {
 
-    let questions = ['Текст 1...','Текст 2...','Текст 3...','Текст 4...',]
-    const [questList, setQuestList] = useState(questions)
+    const {questList, setQuestList} = useContext(QuestListContext)
 
-    //Добавление вопроса
+    // Получение списка вопросов из Main
+    const {questions} = route.params;
+    const [list, setList] = useState(questions)
+
+    // Добавление вопроса
     const addQuestion = () => {
-      setQuestList([...questList, ''])
+      setList([...list, ''])
     }
 
-    //Удаление вопроса
+    // Удаление вопроса
+    // {BUG} - остается пустая строка если удалить первый из двух вопросов без перезахода
     const deleteQuest = (index) => {
-      let temp = [...questList]
+      let temp = [...list]
       temp.splice(index, 1)
+      setList(temp)
       setQuestList(temp)
     }
 
@@ -46,7 +52,7 @@ const Custom = ({navigation}) => {
           <ScrollView vertical bounces={false}>
             <View style={{flex: 1, flexDirection: 'column', alignItems: 'center',}}>
               {
-                  questList.map((item, index) => {
+                  list.map((item, index) => {
                     return (
                       <CustomItem text={item} func={() => {deleteQuest(index)}} ></CustomItem>
                     )                 

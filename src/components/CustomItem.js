@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+
+import React, {useState, useContext} from 'react';
 import propTypes, { func, string } from 'prop-types'
 import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import QuestListContext from '../context';
 
 const CustomItem = ({text, func = () => {} }) => {
+
+  const {questList, setQuestList} = useContext(QuestListContext)
 
   let str
   const [getText, setText] = useState(text)
@@ -29,6 +33,7 @@ const CustomItem = ({text, func = () => {} }) => {
             } */}
             <TextInput style={styles.input} onChangeText={(inp) => {str=inp}} onSubmitEditing={() => {
                 setText(str)
+                setQuestList([...questList, str])
               }}></TextInput>
 
           </View>
