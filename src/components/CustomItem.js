@@ -1,17 +1,16 @@
 
-import React, {useState, useContext} from 'react';
+import React, { useContext } from 'react';
 import propTypes, { func, string } from 'prop-types'
 import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import QuestListContext from '../context';
+import { number } from 'prop-types';
 
-const CustomItem = ({text, func = () => {} }) => {
+const CustomItem = ({ind, text, func = () => {} }) => {
 
   const {questList, setQuestList} = useContext(QuestListContext)
-
   let str
-  const [getText, setText] = useState(text)
 
-  if(getText.length==0) {
+  if(text.length==0) {
     return (
       <View style={{backgroundColor: 'rgba(255, 255, 255, 0.36)',width: '89%', height:60,borderRadius: 20,marginTop: '5%',justifyContent: 'center',alignItems: 'center', }}>
         <View style={{flex: 1, flexDirection: 'row'}}>
@@ -32,9 +31,11 @@ const CustomItem = ({text, func = () => {} }) => {
               }
             } */}
             <TextInput style={styles.input} onChangeText={(inp) => {str=inp}} onSubmitEditing={() => {
-                setText(str)
-                setQuestList([...questList, str])
-              }}></TextInput>
+                let temp = [...questList] // Берем контекст
+                temp.splice(ind, 1, str) // Заменяем последний пустой вопрос на входные данные
+                setQuestList(temp)   
+              }}>
+              </TextInput>
 
           </View>
           <View style={{flex: 1, height: '100%',}}>
@@ -51,7 +52,7 @@ const CustomItem = ({text, func = () => {} }) => {
       <View style={{backgroundColor: 'rgba(255, 255, 255, 0.36)',width: '89%', height:60,borderRadius: 20,marginTop: '5%',justifyContent: 'center',alignItems: 'center', }}>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <View style={{flex: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: '100%'}}>
-            <Text style={styles.mainText}>{getText}</Text>
+            <Text style={styles.mainText}>{text}</Text>
           </View>
           <View style={{flex: 1, height: '100%',}}>
             <TouchableOpacity style={styles.tchop} onPress={func}>
@@ -67,7 +68,8 @@ const CustomItem = ({text, func = () => {} }) => {
 
 CustomItem.propTypes = {
   text: string,
-  func: func
+  func: func,
+  ind: number
 }
 
 const styles = StyleSheet.create({

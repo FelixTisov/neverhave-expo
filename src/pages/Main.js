@@ -1,25 +1,11 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import MyButton from '../components/MyButton'
 import { ImageBackground, StyleSheet, View, Text, TouchableOpacity} from 'react-native'
 import Swiper from 'react-native-swiper'
-import QuestListContext from '../context';
 
 let currentIndex = 0
 
 const Main = ({route, navigation}) => { 
-  const {questList, setQuestList} = useContext(QuestListContext)
-  let que = questList
-
-  //Проверка есть ли пустые вопросы перед входом в Custom
-  function CheckEmptyQuest (){ 
-    questList.map((item, index) => {
-      if(item=='') {
-        let temp = [...questList]
-        temp.splice(index, 1)
-        setQuestList(temp)
-      }                 
-    })
-  }
 
   //Принимаем параметр setCustom из Settings
   React.useEffect(() => {
@@ -191,13 +177,8 @@ const Main = ({route, navigation}) => {
                   case 4: //custom
                     link = 'Custom'
                     break;
-                } 
-                if(link=='Custom') { 
-                  CheckEmptyQuest()
-                  navigation.navigate({name: 'Custom', params: {questions:que}})
-                } 
-                else 
-                  navigation.navigate(`${link}`)
+                }
+                navigation.navigate(`${link}`)
               }}></MyButton>
             </View>
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}/>      

@@ -4,29 +4,23 @@ import MyButton from '../components/MyButton';
 import CustomItem from '../components/CustomItem';
 import QuestListContext from '../context';
 
-const Custom = ({route, navigation}) => {
+const Custom = ({navigation}) => {
 
     const {questList, setQuestList} = useContext(QuestListContext)
 
-    // Получение списка вопросов из Main
-    const {questions} = route.params;
-    const [list, setList] = useState(questions)
-
     // Добавление вопроса
     const addQuestion = () => {
-      setList([...list, ''])
+      setQuestList([...questList, ''])
     }
 
     // Удаление вопроса
-    // {BUG} - остается пустая строка если удалить первый из двух вопросов без перезахода
     const deleteQuest = (index) => {
-      let temp = [...list]
-      temp.splice(index, 1)
-      setList(temp)
-      setQuestList(temp)
+      let temp = [...questList] // Берем контекст
+      temp.splice(index, 1) // Удаляем из контекста выбранный вопрос
+      setQuestList(temp) // Обновляем контекст
     }
 
-    return (
+    return ( 
     <View style={styles.container}>
       <ImageBackground source={require('../../src/images/bg.png')} style={{flex: 1}}>
         
@@ -52,9 +46,9 @@ const Custom = ({route, navigation}) => {
           <ScrollView vertical bounces={false}>
             <View style={{flex: 1, flexDirection: 'column', alignItems: 'center',}}>
               {
-                  list.map((item, index) => {
+                  questList.map((item, index) => {
                     return (
-                      <CustomItem text={item} func={() => {deleteQuest(index)}} ></CustomItem>
+                      <CustomItem ind={index} text={item} func={() => {deleteQuest(index)}} ></CustomItem>
                     )                 
                   })
               }
