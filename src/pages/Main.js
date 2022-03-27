@@ -5,6 +5,9 @@ import Swiper from 'react-native-swiper'
 
 let currentIndex = 0
 
+let questions = new Array()
+
+
 const Main = ({route, navigation}) => { 
 
   //Принимаем параметр setCustom из Settings
@@ -164,12 +167,15 @@ const Main = ({route, navigation}) => {
                 switch (currentIndex) {
                   case 0: //love
                     link = 'GameLove'
+                    questions = require('../components/questions').Love
                     break;
                   case 1: //crazy
                     link = 'GameCrazy'
+                    questions = require('../components/questions').Crazy
                     break;
                   case 2: //sex
                     link = 'GameSex'
+                    questions = require('../components/questions').Sex
                     break;
                   case 3: //mix
                     link = 'Mix'
@@ -177,8 +183,10 @@ const Main = ({route, navigation}) => {
                   case 4: //custom
                     link = 'Custom'
                     break;
-                }
-                navigation.navigate(`${link}`)
+                } if(link=='GameLove' || link=='GameCrazy' || link=='GameSex')
+                    navigation.navigate({name: `${link}`, params: {getQuestions:questions}})
+                  else
+                    navigation.navigate(`${link}`)
               }}></MyButton>
             </View>
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}/>      

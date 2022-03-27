@@ -4,16 +4,26 @@ import { ImageBackground, StyleSheet, View, Text, TouchableOpacity} from 'react-
 
 let questions = new Array()
 questions = require('../components/questions').Crazy
-let k = randomInt((questions.length)-1) //рандомный первый вопрос
+let k = randomInt((questions.length)-1) // Рандомный первый вопрос
 
+// Получить случайный номер вопроса
 function randomInt(max) {
   min = Math.ceil(0);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
 
+//Удалить вопрос из списка
+function deleteQuest(index) {
+  let temp = [...questions] 
+  temp.splice(index, 1) 
+  questions = temp 
+}
+
 const GameCrazy = ({navigation}) => {
+
   const [myText, setMyText] = useState(`${questions[k]}`)
+
     return (
     <View style={styles.container}>
       <ImageBackground source={require('../../src/images/bg.png')} style={{flex: 1}}>
@@ -48,8 +58,10 @@ const GameCrazy = ({navigation}) => {
 
         <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center',}}>
             <MyButton text="далее" func={() => {
+                deleteQuest(k)
+                if(questions.length==0) questions = require('../components/questions').Love
                 k = randomInt((questions.length)-1)
-                setMyText(`${questions[k]}`)               
+                setMyText(`${questions[k]}`)                   
               }}>
             </MyButton>
         </View>

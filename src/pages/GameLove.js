@@ -3,19 +3,26 @@ import MyButton from '../components/MyButton'
 import { ImageBackground, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
 let questions = new Array()
-questions = require('../components/questions').Sex
-let k = randomInt((questions.length)-1) //рандомный первый вопрос
+questions = require('../components/questions').Love
+let k = randomInt((questions.length)-1) // Рандомный первый вопрос
 
+// Получить случайный номер вопроса
 function randomInt(max) {
   min = Math.ceil(0);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
 
-const GameLove = ({navigation}) => {
-  //const [quest, setQuest] = useState(questions)
-  const [myText, setMyText] = useState(`${questions[k]}`)
-  //questions.splice(k, 0) //удалеям из массива первый рандомный вопрос
+// Удалить вопрос из списка
+function deleteQuest(index) {
+  let temp = [...questions] 
+  temp.splice(index, 1) 
+  questions = temp 
+}
+
+const GameLove = ({route, navigation}) => {
+
+  const [myText, setMyText] = useState(`${questions[k]}`) 
 
     return (
     <View style={styles.container}>
@@ -51,14 +58,10 @@ const GameLove = ({navigation}) => {
 
         <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center',}}>
             <MyButton text="далее" func={() => {
-                // if(questions.length==0)
-                // questions = require('../components/questions').Sex
-
-                // questions.splice(k, 1)
-                // if (questions.length>0)
+                deleteQuest(k)
+                if(questions.length==0) questions = require('../components/questions').Love
                 k = randomInt((questions.length)-1)
-                setMyText(`${questions[k]}`) 
-                
+                setMyText(`${questions[k]}`)            
               }}>
             </MyButton>
         </View>
@@ -130,10 +133,5 @@ const styles = StyleSheet.create({
     }
 
   })
-
-
-  // let words = ['one', 'two', 'three', 'four']
-  // words.splice(1,1)
-  // console.log(words[1])
 
 export default GameLove

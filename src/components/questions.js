@@ -109,3 +109,11 @@ const Crazy = [
     
 ]
 module.exports.Crazy = Crazy
+
+const Love = [
+    'Один',
+    'Два',
+    'Три',
+    
+]
+module.exports.Love = Love
