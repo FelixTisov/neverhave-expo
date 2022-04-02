@@ -9,6 +9,7 @@ import GameCrazy from './src/pages/GameCrazy'
 import GameLove from './src/pages/GameLove';
 import Mix from './src/pages/Mix';
 import Custom from './src/pages/Custom';
+import GameMix from './src/pages/GameMix';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
@@ -51,6 +52,11 @@ let App = () => {
         <Stack.Screen
           name="Custom"
           component={Custom}
+          options={{ headerShown: false}}
+        />
+        <Stack.Screen
+          name="GameMix"
+          component={GameMix}
           options={{ headerShown: false}}
         />
         

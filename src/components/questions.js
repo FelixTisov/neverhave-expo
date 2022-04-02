@@ -106,14 +106,18 @@ const Crazy = [
     'ронял телефон в унитаз',
     'ел еду прямо в магазине',
     'просил деньги на похмелье',
+
+    // 'Crazy1',
+    // 'Crazy2',
+    // 'Crazy3',
     
 ]
 module.exports.Crazy = Crazy
 
 const Love = [
-    'Один',
-    'Два',
-    'Три',
+    'Love1',
+    'Love2',
+    'Love3',
     
 ]
 module.exports.Love = Love

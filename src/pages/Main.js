@@ -4,9 +4,7 @@ import { ImageBackground, StyleSheet, View, Text, TouchableOpacity} from 'react-
 import Swiper from 'react-native-swiper'
 
 let currentIndex = 0
-
 let questions = new Array()
-
 
 const Main = ({route, navigation}) => { 
 
@@ -42,9 +40,11 @@ const Main = ({route, navigation}) => {
            onIndexChanged={(index) => {
              currentIndex = index
              if(index>=0 && index <=2)
-               setMyText("начать")
-             else if(index==3 || index==4)
-               setMyText("изменить")
+                setMyText("начать")
+              else if(index==3)
+                setMyText("выбрать")
+              else if(index==4)
+                setMyText("изменить")
             }
           }>
 
@@ -165,22 +165,22 @@ const Main = ({route, navigation}) => {
               <MyButton text={myText} func={() => {
                 let link
                 switch (currentIndex) {
-                  case 0: //love
+                  case 0: 
                     link = 'GameLove'
                     questions = require('../components/questions').Love
                     break;
-                  case 1: //crazy
+                  case 1: 
                     link = 'GameCrazy'
                     questions = require('../components/questions').Crazy
                     break;
-                  case 2: //sex
+                  case 2:
                     link = 'GameSex'
                     questions = require('../components/questions').Sex
                     break;
-                  case 3: //mix
+                  case 3:
                     link = 'Mix'
                     break;
-                  case 4: //custom
+                  case 4: 
                     link = 'Custom'
                     break;
                 } if(link=='GameLove' || link=='GameCrazy' || link=='GameSex')

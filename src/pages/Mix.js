@@ -3,8 +3,14 @@ import { ImageBackground, StyleSheet, View, Text, TouchableOpacity} from 'react-
 import ToggleSwitch from 'toggle-switch-react-native';
 import MyButton from '../components/MyButton';
 
-const Mix = ({route, navigation}) => {
-  const [isSelected, setSelected] = useState(false)
+let questions = [false, false, false, false]
+
+const Mix = ({navigation}) => {
+  const [isLove, setLove] = useState(false)
+  const [isCrazy, setCrazy] = useState(false)
+  const [isSex, setSex] = useState(false)
+  const [isCustom, setCustom] = useState(false)
+  const [isAll, setAll] = useState(false)
  
     return (
     <View style={styles.container}>
@@ -37,11 +43,14 @@ const Mix = ({route, navigation}) => {
               </View>
               <View style={{flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '2%'}}>
                 <ToggleSwitch
-                  isOn={isSelected}
+                  isOn={isLove}
                   onColor="yellow"
                   offColor="gray"
                   size='medium'
-                  onToggle={isOn=>setSelected(isOn)}
+                  onToggle={isOn=> {
+                    setLove(isOn)
+                    questions[0] = true
+                  }}
                 />
               </View>           
             </View>
@@ -52,11 +61,14 @@ const Mix = ({route, navigation}) => {
               </View>
               <View style={{flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '2%'}}>
                 <ToggleSwitch
-                  isOn={isSelected}
+                  isOn={isCrazy}
                   onColor="yellow"
                   offColor="gray"
                   size='medium'
-                  onToggle={isOn=>setSelected(isOn)}
+                  onToggle={isOn => {
+                    setCrazy(isOn)
+                    questions[1] = true
+                  }}
                 />
               </View>           
             </View>
@@ -67,11 +79,14 @@ const Mix = ({route, navigation}) => {
               </View>
               <View style={{flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '2%'}}>
                 <ToggleSwitch
-                  isOn={isSelected}
+                  isOn={isSex}
                   onColor="yellow"
                   offColor="gray"
                   size='medium'
-                  onToggle={isOn=>setSelected(isOn)}
+                  onToggle={isOn=> {
+                    setSex(isOn)
+                    questions[2] = true
+                  }}
                 />
               </View>           
             </View>
@@ -82,11 +97,14 @@ const Mix = ({route, navigation}) => {
               </View>
               <View style={{flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '2%'}}>
                 <ToggleSwitch
-                  isOn={isSelected}
+                  isOn={isCustom}
                   onColor="yellow"
                   offColor="gray"
                   size='medium'
-                  onToggle={isOn=>setSelected(isOn)}
+                  onToggle={isOn=> {
+                    setCustom(isOn)
+                    questions[3] = true
+                  }}
                 />
               </View>           
             </View>
@@ -97,11 +115,21 @@ const Mix = ({route, navigation}) => {
               </View>
               <View style={{flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '2%'}}>
                 <ToggleSwitch
-                  isOn={isSelected}
+                  isOn={isAll}
                   onColor="yellow"
                   offColor="gray"
                   size='medium'
-                  onToggle={isOn=>setSelected(isOn)}
+                  onToggle={isOn=> {
+                    setAll(isOn)
+                    setCustom(isOn)
+                    questions[3] = true
+                    setSex(isOn)
+                    questions[2] = true
+                    setCrazy(isOn)
+                    questions[1] = true
+                    setLove(isOn)
+                    questions[0] = true
+                  }}
                 />
               </View>           
             </View>
@@ -111,7 +139,7 @@ const Mix = ({route, navigation}) => {
             <View style={{flex: 1, }}>
                 <View style={styles.btnCont}>
                     <MyButton text={"начать"} func={() => {
-
+                        navigation.navigate({name: 'GameMix', params: {questList:questions}})
                     }}></MyButton>
                 </View>
             </View>
