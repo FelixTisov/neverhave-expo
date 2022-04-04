@@ -1,14 +1,20 @@
-import React, { useState }from 'react';
+import React, { useState, useContext }from 'react';
 import MyButton from '../components/MyButton'
 import { ImageBackground, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import QuestListContext from '../context';
 
+let isCustomLoaded = false
 let randList= new Array()
 randList = ['default']
+let k = 0 // Рандомный вопрос
 let numb //номер последнего взятого списка
+
+// Списки с вопросами
 let listLove = require('../components/questions').Love
 let listCrazy = require('../components/questions').Crazy
 let listSex = require('../components/questions').Sex
-let k = 0 // Рандомный вопрос
+let listCustom = new Array()
+let customBack = new Array()
 
 // Получить случайный номер вопроса
 function randomInt(max) {
@@ -17,19 +23,22 @@ function randomInt(max) {
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
 
-//Удалить вопрос из списка
+// Удалить вопрос из списка
 function deleteQuest(index, arr) {
   let temp = [...arr] 
   temp.splice(index, 1)
   switch (numb) {
-      case 0:
-          listLove = temp
-          break;
+    case 0:
+        listLove = temp
+        break;
     case 1:
         listCrazy = temp
         break;
     case 2:
         listSex = temp
+        break;
+    case 3:
+        listCustom = temp
         break;
   }
 }
@@ -38,15 +47,23 @@ const GameMix = ({route, navigation}) => {
 
     const {questList} = route.params
 
-    // Получить случайный номер списка
+    // Если страница отрендерина впервые, загружаем вопросы из контекста
+    if(!isCustomLoaded) {
+      const {questList, setQuestList} = useContext(QuestListContext)
+      listCustom = questList
+      customBack = listCustom // делаем бэкап вопросов
+      isCustomLoaded = true
+    }
+
+    // Получить случайный список
     function randomList() {
 
         let res = -1
-        min = Math.ceil(0);
-        const max = 3
+        min = Math.ceil(0)
+        const max = 4
 
         while(res==-1) {
-            let number = Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
+            let number = Math.floor(Math.random() * (max - min + 1)) + min
             //Если рандомный номер и включение листа = true, то выбираем этот лист
             if(questList[0] && number == 0) {
                 res = [...listLove]
@@ -63,16 +80,22 @@ const GameMix = ({route, navigation}) => {
                 numb = 2
                 return res
             }
+            else if(questList[3] && number == 3) {
+              res = [...listCustom]
+              numb = 3
+              return res
+          }
             else continue
         }
     }
 
-    //Если страница рендерится при открытии
+    // Если страница рендерится при первом открытии
     if(randList[0]==='default') {
         randList = randomList() 
         k = randomInt((randList.length)-1)
     }
 
+    // Ставим рандомный вопрос при первой загрузке страницы
     const [myText, setMyText] = useState(`${randList[k]}`)
 
     return (
@@ -108,11 +131,17 @@ const GameMix = ({route, navigation}) => {
         </View>
 
         <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center',}}>
-            <MyButton text="далее" func={() => {   
-                deleteQuest(k, randList)            
+            <MyButton text="далее" func={() => {
+                // Удаляем вопрос, который уже отображается   
+                deleteQuest(k, randList)  
+
+                // Проверяем, закончился ли какой-либо из списков          
                 if(listLove.length==0) listLove = require('../components/questions').Love
                 if(listCrazy.length==0) listCrazy = require('../components/questions').Crazy
                 if(listSex.length==0) listSex = require('../components/questions').Sex
+                if(listCustom.length==0) listCustom = customBack
+
+                // Новый рандомный список и вопрос из него
                 randList = randomList() 
                 k = randomInt((randList.length)-1)
                 setMyText(`${randList[k]}`)                   
