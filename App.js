@@ -22,7 +22,6 @@ const selectReducer = (state = defaultState, action) => {
       return { ...state, selectedQuestionGroups: [action.payload] }
 
     case 'ADD_GROUP':
-      console.log(state.selectedQuestionGroups)
       return {
         ...state,
         selectedQuestionGroups: [
@@ -32,7 +31,6 @@ const selectReducer = (state = defaultState, action) => {
       }
 
     case 'DELETE_GROUP':
-      console.log(state.selectedQuestionGroups)
       const indexDeleted = state.selectedQuestionGroups.indexOf(action.payload)
       if (indexDeleted === -1)
         return {
@@ -49,14 +47,12 @@ const selectReducer = (state = defaultState, action) => {
       }
 
     case 'ADD_ALL':
-      console.log(state.selectedQuestionGroups)
       return {
         ...state,
         selectedQuestionGroups: ['Love', 'Crazy', 'Sex', 'Custom'],
       }
 
     case 'DELETE_ALL':
-      console.log(state.selectedQuestionGroups)
       return {
         ...state,
         selectedQuestionGroups: [],

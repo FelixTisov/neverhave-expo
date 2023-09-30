@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import {
   ImageBackground,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import MyButton from '../components/MyButton'
 
-const Game = ({ route, navigation }) => {
+const Game = ({ navigation }) => {
   let allQuestions = require('../components/questions')
   let questions = []
 
