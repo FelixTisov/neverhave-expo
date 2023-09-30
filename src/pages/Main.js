@@ -11,7 +11,6 @@ import MyButton from '../components/MyButton'
 import Swiper from 'react-native-swiper'
 
 let currentIndex = 0
-let questions = new Array()
 
 const Main = ({ route, navigation }) => {
   //Принимаем параметр setCustom из Settings
@@ -406,12 +405,7 @@ const Main = ({ route, navigation }) => {
                       link = 'Custom'
                       break
                   }
-                  if (link == 'Game')
-                    navigation.navigate({
-                      name: `${link}`,
-                      params: { optionsList: questions },
-                    })
-                  else navigation.navigate(`${link}`)
+                  navigation.navigate(`${link}`)
                 }}
               ></MyButton>
             </View>

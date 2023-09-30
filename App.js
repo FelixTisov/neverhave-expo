@@ -1,7 +1,7 @@
 import React from 'react'
 import Main from './src/pages/Main'
 import Settings from './src/pages/Settings'
-import Game from './src/pages/GameLove'
+import Game from './src/pages/Game'
 import Mix from './src/pages/Mix'
 import Custom from './src/pages/Custom'
 import { NavigationContainer } from '@react-navigation/native'
@@ -22,12 +22,44 @@ const selectReducer = (state = defaultState, action) => {
       return { ...state, selectedQuestionGroups: [action.payload] }
 
     case 'ADD_GROUP':
+      console.log(state.selectedQuestionGroups)
       return {
         ...state,
         selectedQuestionGroups: [
           ...state.selectedQuestionGroups,
           action.payload,
         ],
+      }
+
+    case 'DELETE_GROUP':
+      console.log(state.selectedQuestionGroups)
+      const indexDeleted = state.selectedQuestionGroups.indexOf(action.payload)
+      if (indexDeleted === -1)
+        return {
+          ...state,
+          selectedQuestionGroups: state.selectedQuestionGroups,
+        }
+      else {
+        let arrayCopy = [...state.selectedQuestionGroups]
+        arrayCopy.splice(indexDeleted, 1)
+        return {
+          ...state,
+          selectedQuestionGroups: arrayCopy,
+        }
+      }
+
+    case 'ADD_ALL':
+      console.log(state.selectedQuestionGroups)
+      return {
+        ...state,
+        selectedQuestionGroups: ['Love', 'Crazy', 'Sex', 'Custom'],
+      }
+
+    case 'DELETE_ALL':
+      console.log(state.selectedQuestionGroups)
+      return {
+        ...state,
+        selectedQuestionGroups: [],
       }
 
     default:

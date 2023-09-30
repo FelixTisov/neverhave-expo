@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   ImageBackground,
   StyleSheet,
@@ -9,14 +10,17 @@ import {
 import ToggleSwitch from 'toggle-switch-react-native'
 import MyButton from '../components/MyButton'
 
-let questions = [false, false, false, false]
-
 const Mix = ({ navigation }) => {
   const [isLove, setLove] = useState(false)
   const [isCrazy, setCrazy] = useState(false)
   const [isSex, setSex] = useState(false)
   const [isCustom, setCustom] = useState(false)
   const [isAll, setAll] = useState(false)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!(isLove && isCrazy && isSex && isCustom)) setAll(false)
+  }, [isLove, isCrazy, isSex, isCustom])
 
   return (
     <View style={styles.container}>
@@ -109,7 +113,9 @@ const Mix = ({ navigation }) => {
                   size="medium"
                   onToggle={(isOn) => {
                     setLove(isOn)
-                    questions[0] = true
+                    isOn
+                      ? dispatch({ type: 'ADD_GROUP', payload: 'Love' })
+                      : dispatch({ type: 'DELETE_GROUP', payload: 'Love' })
                   }}
                 />
               </View>
@@ -151,7 +157,9 @@ const Mix = ({ navigation }) => {
                   size="medium"
                   onToggle={(isOn) => {
                     setCrazy(isOn)
-                    questions[1] = true
+                    isOn
+                      ? dispatch({ type: 'ADD_GROUP', payload: 'Crazy' })
+                      : dispatch({ type: 'DELETE_GROUP', payload: 'Crazy' })
                   }}
                 />
               </View>
@@ -193,7 +201,9 @@ const Mix = ({ navigation }) => {
                   size="medium"
                   onToggle={(isOn) => {
                     setSex(isOn)
-                    questions[2] = true
+                    isOn
+                      ? dispatch({ type: 'ADD_GROUP', payload: 'Sex' })
+                      : dispatch({ type: 'DELETE_GROUP', payload: 'Sex' })
                   }}
                 />
               </View>
@@ -235,7 +245,9 @@ const Mix = ({ navigation }) => {
                   size="medium"
                   onToggle={(isOn) => {
                     setCustom(isOn)
-                    questions[3] = true
+                    isOn
+                      ? dispatch({ type: 'ADD_GROUP', payload: 'Custom' })
+                      : dispatch({ type: 'DELETE_GROUP', payload: 'Custom' })
                   }}
                 />
               </View>
@@ -278,13 +290,12 @@ const Mix = ({ navigation }) => {
                   onToggle={(isOn) => {
                     setAll(isOn)
                     setCustom(isOn)
-                    questions[3] = true
                     setSex(isOn)
-                    questions[2] = true
                     setCrazy(isOn)
-                    questions[1] = true
                     setLove(isOn)
-                    questions[0] = true
+                    isOn
+                      ? dispatch({ type: 'ADD_ALL' })
+                      : dispatch({ type: 'DELETE_ALL' })
                   }}
                 />
               </View>
@@ -296,10 +307,7 @@ const Mix = ({ navigation }) => {
                 <MyButton
                   text={'начать'}
                   func={() => {
-                    navigation.navigate({
-                      name: 'GameMix',
-                      params: { questList: questions },
-                    })
+                    navigation.navigate('Game')
                   }}
                 ></MyButton>
               </View>
