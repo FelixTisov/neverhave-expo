@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import MyButton from '../components/MyButton'
 import {
   ImageBackground,
   StyleSheet,
@@ -7,6 +6,8 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import MyButton from '../components/MyButton'
 import Swiper from 'react-native-swiper'
 
 let currentIndex = 0
@@ -18,6 +19,8 @@ const Main = ({ route, navigation }) => {
     if (route.params?.setCustom) {
     }
   }, [route.params?.setCustom])
+
+  const dispatch = useDispatch()
 
   const [myText, setMyText] = useState('начать')
   return (
@@ -385,8 +388,16 @@ const Main = ({ route, navigation }) => {
                   let link
                   switch (currentIndex) {
                     case 0:
-                      link = 'GameLove'
-                      questions = ['Love']
+                      link = 'Game'
+                      dispatch({ type: 'SELECT_GROUP', payload: 'Love' })
+                      break
+                    case 1:
+                      link = 'Game'
+                      dispatch({ type: 'SELECT_GROUP', payload: 'Crazy' })
+                      break
+                    case 2:
+                      link = 'Game'
+                      dispatch({ type: 'SELECT_GROUP', payload: 'Sex' })
                       break
                     case 3:
                       link = 'Mix'
@@ -395,7 +406,7 @@ const Main = ({ route, navigation }) => {
                       link = 'Custom'
                       break
                   }
-                  if (link == 'GameLove')
+                  if (link == 'Game')
                     navigation.navigate({
                       name: `${link}`,
                       params: { optionsList: questions },

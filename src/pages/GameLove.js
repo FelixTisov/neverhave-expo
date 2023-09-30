@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import MyButton from '../components/MyButton'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   ImageBackground,
   StyleSheet,
@@ -7,18 +7,21 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native'
+import MyButton from '../components/MyButton'
 
-const GameLove = ({ route, navigation }) => {
+const Game = ({ route, navigation }) => {
   let allQuestions = require('../components/questions')
   let questions = []
 
-  useEffect(() => {
-    optionsList.forEach((item) => {
-      let questionsForAdd = allQuestions[item]
-      questions = questions.concat(questionsForAdd)
-      console.log(questions)
-    })
-  }, optionsList)
+  const selectedGroups = useSelector(
+    (state) => state.selection.selectedQuestionGroups
+  )
+
+  // Добавить выбранные группы вопросов
+  selectedGroups.forEach((item) => {
+    let questionsForAdd = allQuestions[item]
+    questions = questions.concat(questionsForAdd)
+  })
 
   const [myText, setMyText] = useState('')
   const [usedIndexes, setUsedIndexes] = useState([])
@@ -26,7 +29,6 @@ const GameLove = ({ route, navigation }) => {
   // Получить случайный номер вопроса
   const randomInt = (max) => {
     let newIndex
-
     while (true) {
       newIndex = Math.floor(Math.random() * max)
       if (usedIndexes.length === questions.length) return
@@ -35,9 +37,9 @@ const GameLove = ({ route, navigation }) => {
     }
   }
 
-  // Когда страница открыта впервые
+  // Когда страница открыта впервые, отобразить рандомный первый вопрос
   if (usedIndexes.length === 0) {
-    let k = randomInt(questions.length) // Рандомный первый вопрос
+    let k = randomInt(questions.length)
     usedIndexes.push(k)
     setMyText(`${questions[k]}`)
   }
@@ -181,4 +183,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default GameLove
+export default Game
